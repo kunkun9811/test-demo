@@ -51,7 +51,7 @@ jobs:
           host: ${{ secrets.REMOTE_HOST }}
           username: ${{ secrets.REMOTE_USER }}
           key: ${{ secrets.SSH_KEY }}
-          rm: true
+          rm: false
           source: "build/*"
           strip_components: 1
           target: ${{ secrets.REMOTE_DIR }}
