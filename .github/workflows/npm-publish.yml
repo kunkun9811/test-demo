@@ -46,20 +46,12 @@ jobs:
         run: npm run build
         
       - name: Deploy React app to server
-        run: |
-          touch ssh_key
-          echo ${{ secrets.SSH_KEY }} > ssh_key
-          scp -r -i ssh_key /home/runner/work/test-demo/test-demo/build/* root@${{ secrets.REMOTE_HOST }}:${{ secrets.REMOTE_DIR }}
-
-      - name: Clean up ssh key file
-        run: rm ssh_key
-
-#       - name: Copying files to server
-#         uses: appleboy/scp-action@master
-#         with:
-#           host: ${{ secrets.REMOTE_HOST }}
-#           username: ${{ secrets.REMOTE_USER }}
-#           key: ${{ secrets.SSH_KEY }}
-#           rm: true
-#           source: "build/*"
-#           target: ${{ secrets.REMOTE_DIR }}
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          rm: true
+          source: "build/*"
+          strip_components: 1
+          target: ${{ secrets.REMOTE_DIR }}
