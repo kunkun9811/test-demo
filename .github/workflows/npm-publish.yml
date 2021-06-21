@@ -47,7 +47,12 @@ jobs:
         
       - name: Deploy React app to server
         run: |
-          scp -i ${{ secrets.SSH_KEY }} -r /home/runner/work/test-demo/test-demo/build/* root@${{ secrets.REMOTE_HOST }}:${{ secrets.REMOTE_DIR }}
+          touch ssh_key
+          echo ${{ secrets.SSH_KEY }} > ssh_key
+          scp -i ssh_key -r /home/runner/work/test-demo/test-demo/build/* root@${{ secrets.REMOTE_HOST }}:${{ secrets.REMOTE_DIR }}
+
+      - name: Clean up ssh key file
+        run: rm ssh_key
 
 #       - name: Copying files to server
 #         uses: appleboy/scp-action@master
